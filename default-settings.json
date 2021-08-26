@@ -1,0 +1,8 @@
+{
+  "exchange": "bybit",
+  "key": "key-here",
+  "secret": "secret-here",
+  "check_leverage": "false",
+  "cooldown": 0.25,
+}
+
