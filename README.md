@@ -4,7 +4,7 @@ A Trading Bot for Bybit USDT Futures with a built in strategy for Liquidation Hu
 
 *First off if you enjoy using open source software please use my refferel link to create a new account when using this bot, its free and help me make more cools stuff for you guys:*
 
-https://www.bybit.com/register?affiliate_id=767&group_id=25671&group_type=1
+https://partner.bybit.com/b/usdtbot
 
 
 ### Full Docs:
