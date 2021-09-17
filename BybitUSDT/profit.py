@@ -74,7 +74,7 @@ def fetch_price(symbol, side):
                 return price, side
             else:
                 side = 'Buy'
-                price = round(ticker - (ticker * (coin['take_profit_percent'] / 100)), 3)
+                price = round(((ticker * (coin['take_profit_percent'] / 100) - ticker) * -1), 3)
                 return price, side
         else:
             pass
