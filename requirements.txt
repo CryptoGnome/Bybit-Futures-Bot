@@ -1,5 +1,5 @@
-ccxt==1.42.51
-prettyprinter==0.18.0
-requests==2.22.0
-unicorn-binance-websocket-api==1.32.0
+ccxt
+prettyprinter
+requests
+unicorn-binance-websocket-api
 
