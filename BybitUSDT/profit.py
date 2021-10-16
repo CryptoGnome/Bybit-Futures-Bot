@@ -59,6 +59,34 @@ def check_positions(symbol):
         print("API NOT RESPONSIVE AT CHECK ORDER")
         sleep(5)
 
+def get_price_precision(symbol):
+    precision = client.Symbol.Symbol_get().result()
+    pprecsion = precision[0]["result"]
+
+    for x in range(len(pprecsion)):
+        if pprecsion[x]["name"] == symbol+"USDT":
+            numbers = pprecsion[x]["price_filter"]["tick_size"]
+            return len(numbers) - 2
+    return None
+        
+def tp_calc(symbol, side):
+    entry_price_data = client.LinearPositions.LinearPositions_myPosition(symbol=symbol + 'USDT').result()
+    for coin in coins:
+        if coin['symbol'] == symbol:
+            precision = get_price_precision(symbol)
+            if side == 'Buy':
+                entry_price = float(entry_price_data[0]["result"][0]["entry_price"])
+                price = round(entry_price + (entry_price * (coin['take_profit_percent'] / 100)), precision)
+                side = 'Sell'
+                return price, side
+            else:
+                side = 'Buy'
+                entry_price = float(entry_price_data[0]["result"][1]["entry_price"])
+                price = round(((entry_price * (coin['take_profit_percent'] / 100) - entry_price) * -1), precision)
+                return price, side
+        else:
+            pass    
+ 
 def fetch_ticker(symbol):
     tickerDump = binance.fetch_ticker(symbol + '/USDT')
     ticker = float(tickerDump['last'])
@@ -130,7 +158,8 @@ def cancel_stops(symbol, size, side):
 
 
 def set_tp(symbol, size, side):
-    prices = fetch_price(symbol, side)
+    prices = tp_calc(symbol, side)
+    cancel = client.LinearOrder.LinearOrder_cancel(symbol=symbol + "USDT").result()
     order = client.LinearOrder.LinearOrder_new(side=prices[1], symbol=symbol + "USDT", order_type="Limit", qty=size,
                                        price=prices[0], time_in_force="GoodTillCancel",
                                        reduce_only=True, close_on_trigger=False).result()
