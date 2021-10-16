@@ -1,5 +1,6 @@
 ccxt
 prettyprinter
 requests
+jsonschema==3.2
+bravado
 unicorn-binance-websocket-api
-
