@@ -55,6 +55,13 @@ def fetch_vwap(symbol):
 
     return vwap, longwap, shortwap
 
+def fetch_lickval(symbol):
+    for coin in coins:
+        if coin["symbol"] == symbol:
+            return coin["lick_value"]
+        else:
+            pass
+
 def load_symbols(coins):
     symbols = []
     for coin in coins:
@@ -161,7 +168,7 @@ def calculate_order(symbol, side):
             position = position[1]
             pnl = float(position['unrealised_pnl'])
 
-            if pnl > 0:
+            if pnl < 0:
                 ticker = fetch_ticker(symbol)
                 percent_change = ticker - float(position['entry_price'])
                 pnl = (percent_change / ticker) * -100
@@ -183,16 +190,16 @@ def calculate_order(symbol, side):
                     size = min_order
                     place_order(symbol, side, ticker, size)
                 elif size1 < position['size'] <= size2 and pnl > dca[0]:
-                    size = min_order * modifiers[1]
+                    size = min_order * modifiers[0]
                     place_order(symbol, side, ticker, size)
                 elif size2 < position['size'] <= size3 and pnl > dca[1]:
-                    size = min_order * modifiers[2]
+                    size = min_order * modifiers[1]
                     place_order(symbol, side, ticker, size)
                 elif size3 < position['size'] <= size4 and pnl > dca[2]:
-                    size = min_order * modifiers[3]
+                    size = min_order * modifiers[2]
                     place_order(symbol, side, ticker, size)
                 elif size4 < position['size'] and pnl > dca[3]:
-                    size = min_order * modifiers[4]
+                    size = min_order * modifiers[3]
                     place_order(symbol, side, ticker, size)
                 else:
                     print("At Max Size for ", symbol, " Tier or Not Outside Drawdown Settings..")
@@ -251,11 +258,12 @@ def check_liquidations():
 
                         vwaps = fetch_vwap(symbol)
                         ticker = fetch_ticker(symbol)
+                        lick_val = fetch_lickval(symbol)
 
-                        if ticker < vwaps[1] and side == 'SELL' and lick_size:
+                        if ticker < vwaps[1] and side == 'SELL' and lick_size > lick_val:
                             side = 'Buy'
                             calculate_order(symbol, side)
-                        elif ticker > vwaps[2] and side == "BUY":
+                        elif ticker > vwaps[2] and side == "BUY" and lick_size > lick_val:
                             side = 'Sell'
                             calculate_order(symbol, side)
                         else:
