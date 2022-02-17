@@ -21,10 +21,6 @@ https://cryptognome.gitbook.io/bybit-futures-bot/
 - run profit.py
 
 
-### Tips:
-
-USE PM2 HANDLE Restarts
-
 
 Follow me on twitter for updates:
 https://twitter.com/Crypt0Gnome
