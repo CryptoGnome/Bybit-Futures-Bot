@@ -24,3 +24,7 @@ https://partner.bybit.com/b/usdtbot
 ### Tips:
 
 USE PM2 HANDLE Restarts
+
+
+Follow me on twitter for updates:
+https://twitter.com/Crypt0Gnome
