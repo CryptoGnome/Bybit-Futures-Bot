@@ -9,7 +9,7 @@ https://partner.bybit.com/b/usdtbot
 
 ### Full Docs:
 
-```coming soon```
+https://cryptognome.gitbook.io/bybit-futures-bot/
 
 
 ### Quick Setup Steps:
