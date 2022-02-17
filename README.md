@@ -23,4 +23,5 @@ https://cryptognome.gitbook.io/bybit-futures-bot/
 
 
 Follow me on twitter for updates:
+
 https://twitter.com/Crypt0Gnome
